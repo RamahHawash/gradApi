@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login and Sign Up</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .tab {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-right: 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px 5px 0 0;
+        cursor: pointer;
+      }
+
+      .tab.active {
+        background-color: #45a049;
+      }
+
+      .tab-content {
+        display: none;
+        padding: 20px 0;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="tabs">
+        <button class="tab active" onclick="openTab('login')">Login</button>
+        <button class="tab" onclick="openTab('signup')">Sign Up</button>
+      </div>
+      <div id="login" class="tab-content active">
+        <!-- Login form goes here -->
+        <h2>Login</h2>
+        <form>
+          <!-- Login form fields -->
+        </form>
+      </div>
+      <div id="signup" class="tab-content">
+        <!-- Sign up form goes here -->
+        <h2>Sign Up</h2>
+        <form>
+          <!-- Sign up form fields -->
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function openTab(tabName) {
+        var tabs = document.getElementsByClassName("tab");
+        for (var i = 0; i < tabs.length; i++) {
+          tabs[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        var tabContents = document.getElementsByClassName("tab-content");
+        for (var i = 0; i < tabContents.length; i++) {
+          tabContents[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+      }
+    </script>
+  </body>
+</html>

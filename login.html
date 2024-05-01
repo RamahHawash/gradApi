@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .login-form {
+        width: 300px;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-heading {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333333; /* Heading color */
+      }
+
+      .sub-heading {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: #666666; /* Subheading color */
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cccccc; /* Input border color */
+        border-radius: 5px;
+        outline: none;
+      }
+
+      .btn-login {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: blueviolet; /* Button background color */
+        color: #ffffff; /* Button text color */
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .btn-signup {
+        padding: 10px;
+        border: none;
+        background-color: transparent;
+        color: blueviolet; /* Sign up button color */
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .signup-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="login-container">
+      <form id="loginForm" onsubmit="login(event)">
+        <h1 class="login-heading">Login</h1>
+        <h2 class="sub-heading">Enter your details below to continue</h2>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="email"
+            class="input-field"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            class="input-field"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn-login">Log In</button>
+        </div>
+        <div class="signup-option">
+          <p>
+            Don't have an account?
+            <a href="signup.html" id="loginLink">SIGN UP </a>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function login(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Extract email and password from the form
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Construct the login data object
+        const loginData = {
+          uniqueName: email,
+          password: password,
+        };
+        console.log(loginData);
+
+        // Send a POST request to the login API endpoint
+        fetch("http://localhost:8080/api/v1/users/authenticate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Invalid credentials");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const token = data.data.token;
+            console.log("Token:", token);
+            // Handle successful login (e.g., redirect to dashboard)
+          })
+          .catch((error) => {
+            console.error("Login failed:", error.message);
+            // Handle login error (e.g., display error message to the user)
+          });
+      }
+    </script>
+  </body>
+</html>

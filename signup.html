@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <!-- Add your CSS file link here -->
+  </head>
+  <body>
+    <div class="login-container">
+      <form class="login-form" id="signupForm">
+        <h1 class="login-heading">SIGNUP</h1>
+        <h2 class="sub-heading">Enter your details below to continue</h2>
+
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            class="input-field"
+            placeholder="Email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="username"
+            class="input-field"
+            placeholder="Username"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            class="input-field"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn-login">SIGN UP</button>
+        </div>
+
+        <div class="signup-option">
+          <p>
+            Already have an account?
+            <a href="login.html" id="loginLink">LOG IN</a>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await fetch("http://localhost:8081/api/v1/users", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, username, password }),
+            });
+
+            if (response.status === 201) {
+              // Successful signup
+              window.location.href = "/dashboard";
+            } else {
+              throw new Error("Sign-up failed");
+            }
+          } catch (err) {
+            console.error("Sign-up failed:", err);
+            alert("Sign-up failed. Please try again.");
+          }
+        });
+    </script>
+  </body>
+</html>
+<style>
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .login-form {
+    width: 300px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333333; /* Heading color */
+  }
+
+  .sub-heading {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #666666; /* Subheading color */
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc; /* Input border color */
+    border-radius: 5px;
+    outline: none;
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: blueviolet; /* Button background color */
+    color: #ffffff; /* Button text color */
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .btn-signup {
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    color: blueviolet; /* Sign up button color */
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .signup-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
